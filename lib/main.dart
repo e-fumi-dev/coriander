@@ -11,11 +11,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('コリアンダー'),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                'KBOYさんじゃないよ！',
+              )
+            ],
+          ),
+        ),
+      )
     );
   }
 }
