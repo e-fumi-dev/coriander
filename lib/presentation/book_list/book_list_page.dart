@@ -1,3 +1,4 @@
+import 'package:coriander/domain/book.dart';
 import 'package:coriander/presentation/add_book/add_book_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,27 @@ class BookListPage extends StatelessWidget {
                           model.fetchBooks();
                         },
                       ),
+                      onLongPress: () {
+                        //TODO　削除
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('${book.title}を削除しますか？'),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('OK'),
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+                                    //todo 削除APIを叩く
+                                    await deleteBook(context, model, book);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ))
                 .toList();
             return ListView(
@@ -61,5 +83,15 @@ class BookListPage extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  Future deleteBook(
+      BuildContext context, BookListModel model, Book book) async {
+    try {
+      await model.deleteBook(book);
+      await model.fetchBooks();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
